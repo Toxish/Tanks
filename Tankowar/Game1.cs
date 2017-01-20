@@ -11,7 +11,7 @@ namespace Tankowar
     /// </summary>
     public class Game1 : Game
     {
-        enum direct { up, down, left, right};
+        enum direct { up, down, left, right };
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Texture2D texture, bullet, enemy;
@@ -20,6 +20,7 @@ namespace Tankowar
         Vector2 position1 = new Vector2();
         float speed = 4f, speedb = 16f, espeed = 4f;
         int frameWidth = 40;
+        int frameHeight = 40;
         Point currentFrame = new Point(0, 0);
         Point spriteSize = new Point(4, 1);
         Point ecurrentFrame = new Point(0, 0);
@@ -56,7 +57,7 @@ namespace Tankowar
             texture = Content.Load<Texture2D>("tank");
             enemy = Content.Load<Texture2D>("enemy");
             bullet = Content.Load<Texture2D>("bullet");
-            
+
             // TODO: use this.Content to load your game content here
         }
         /// <summary>
@@ -129,13 +130,13 @@ namespace Tankowar
                 currentFrame.X = 1;
                 drctank = direct.down;
             }
-            if (keyboardState.IsKeyDown(Keys.Space)&& !shot)
+            if (keyboardState.IsKeyDown(Keys.Space) && !shot)
             {
                 shot = true;
-                if(drctank == direct.up)
+                if (drctank == direct.up)
                 {
-                    position1.X = position.X+18;
-                    position1.Y = position.Y+13;
+                    position1.X = position.X + 18;
+                    position1.Y = position.Y + 13;
                     drcbul = direct.up;
                 }
                 if (drctank == direct.down)
@@ -146,20 +147,20 @@ namespace Tankowar
                 }
                 if (drctank == direct.left)
                 {
-                    position1.X = position.X+8;
+                    position1.X = position.X + 8;
                     position1.Y = position.Y + 18;
                     drcbul = direct.left;
                 }
                 if (drctank == direct.right)
                 {
-                    position1.X = position.X+20;
-                    position1.Y = position.Y+18;
+                    position1.X = position.X + 20;
+                    position1.Y = position.Y + 18;
                     drcbul = direct.right;
                 }
             }
-            if(shot)
+            if (shot)
             {
-                if(CollideBullet())
+                if (CollideBullet())
                 {
 
                 }
@@ -169,7 +170,7 @@ namespace Tankowar
                 }
                 if (drcbul == direct.down)
                 {
-                    position1.Y += speedb; 
+                    position1.Y += speedb;
                 }
                 if (drcbul == direct.right)
                 {
@@ -194,33 +195,33 @@ namespace Tankowar
         {
             GraphicsDevice.Clear(color);
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
-                spriteBatch.Draw(texture, position,
-                    new Rectangle(currentFrame.X * frameWidth,
-                        currentFrame.Y * frameHeight,
-                        frameWidth, frameHeight),
-                    Color.White, 0, Vector2.Zero,
-                    1, SpriteEffects.None, 0);
-                spriteBatch.Draw(enemy, enemypos,
-                    new Rectangle(ecurrentFrame.X * frameWidth,
-                        ecurrentFrame.Y * frameHeight,
-                        frameWidth, frameHeight),
-                    Color.White, 0, Vector2.Zero,
-                    1, SpriteEffects.None, 0);
-                if (shot)
-                {
-                    spriteBatch.Draw(bullet, position1, Color.White);
-                }
-                spriteBatch.End();
-                // TODO: Add your drawing code here
+            spriteBatch.Draw(texture, position,
+                new Rectangle(currentFrame.X * frameWidth,
+                    currentFrame.Y * frameHeight,
+                    frameWidth, frameHeight),
+                Color.White, 0, Vector2.Zero,
+                1, SpriteEffects.None, 0);
+            spriteBatch.Draw(enemy, enemypos,
+                new Rectangle(ecurrentFrame.X * frameWidth,
+                    ecurrentFrame.Y * frameHeight,
+                    frameWidth, frameHeight),
+                Color.White, 0, Vector2.Zero,
+                1, SpriteEffects.None, 0);
+            if (shot)
+            {
+                spriteBatch.Draw(bullet, position1, Color.White);
+            }
+            spriteBatch.End();
+            // TODO: Add your drawing code here
 
-                base.Draw(gameTime);
+            base.Draw(gameTime);
         }
         protected bool Collide()
         {
             Rectangle goodSpriteRect = new Rectangle((int)position.X,
-                (int)position.Y, spriteSize.X*10+1, spriteSize.Y*40+2);
+                (int)position.Y, spriteSize.X * 10 + 1, spriteSize.Y * 40 + 2);
             Rectangle evilSpriteRect = new Rectangle((int)enemypos.X,
-                (int)enemypos.Y, espriteSize.X*10+1, espriteSize.Y*40+2);
+                (int)enemypos.Y, espriteSize.X * 10 + 1, espriteSize.Y * 40 + 2);
 
             return goodSpriteRect.Intersects(evilSpriteRect);
         }
