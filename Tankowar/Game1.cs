@@ -20,7 +20,6 @@ namespace Tankowar
         Vector2 position1 = new Vector2();
         float speed = 4f, speedb = 16f, espeed = 4f;
         int frameWidth = 40;
-        int frameHeight = 40;
         Point currentFrame = new Point(0, 0);
         Point spriteSize = new Point(4, 1);
         Point ecurrentFrame = new Point(0, 0);
@@ -194,7 +193,6 @@ namespace Tankowar
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(color);
-            float y = positionsel.Y;
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
                 spriteBatch.Draw(texture, position,
                     new Rectangle(currentFrame.X * frameWidth,
