@@ -1,8 +1,6 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Collections.Specialized;
 
 namespace Tankowar
 {
@@ -11,6 +9,17 @@ namespace Tankowar
     /// </summary>
     public class Game1 : Game
     {
+        enum GameState
+        {
+            MainMenu,
+            Gameplay,
+            EndOfGame
+        }
+
+        public class Tank
+        {
+
+        }
         enum direct { up, down, left, right };
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -29,6 +38,8 @@ namespace Tankowar
         direct drcbul = 0;
         direct drctank = 0;
         Color color = Color.White;
+        private GameState gameScreen = GameState.MainMenu;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -75,6 +86,35 @@ namespace Tankowar
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
+            switch (gameScreen)
+            {
+                case GameState.MainMenu:
+                    UpdateMainMenu(gameTime);
+                    break;
+                case GameState.Gameplay:
+                    UpdateGameplay(gameTime);
+                    break;
+                case GameState.EndOfGame:
+                    UpdateEndOfGame(gameTime);
+                    break;
+            }
+        }
+
+        void UpdateMainMenu(GameTime gameTime)
+        {
+            // Respond to user input for menu selections, etc
+            //if (pushedStartGameButton)
+            //    _state = GameState.GamePlay;
+        }
+
+        void UpdateGameplay(GameTime gameTime)
+        {
+            // Respond to user actions in the game.
+            // Update enemies
+            // Handle collisions
+
+
             KeyboardState keyboardState = Keyboard.GetState();
             if (Collide())
             {
@@ -185,14 +225,44 @@ namespace Tankowar
             {
                 shot = false;
             }
-            base.Update(gameTime);
+
+            //if (playerDied)
+            //    _state = GameState.EndOfGame;
         }
+
+        void UpdateEndOfGame(GameTime gameTime)
+        {
+            // Update scores
+            // Do any animations, effects, etc for getting a high score
+            // Respond to user input to restart level, or go back to main menu
+            //if (pushedMainMenuButton)
+            //    _state = GameState.MainMenu;
+            //else if (pushedRestartLevelButton)
+            //{
+            //    ResetLevel();
+            //    _state = GameState.Gameplay;
+            //}
+        }
+
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            base.Draw(gameTime);
+            switch (gameScreen)
+            {
+                case GameState.MainMenu:
+                    DrawMainMenu(gameTime);
+                    break;
+                case GameState.Gameplay:
+                    DrawGameplay(gameTime);
+                    break;
+                case GameState.EndOfGame:
+                    DrawEndOfGame(gameTime);
+                    break;
+            }
             GraphicsDevice.Clear(color);
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.AlphaBlend);
             spriteBatch.Draw(texture, position,
@@ -212,10 +282,27 @@ namespace Tankowar
                 spriteBatch.Draw(bullet, position1, Color.White);
             }
             spriteBatch.End();
-            // TODO: Add your drawing code here
-
-            base.Draw(gameTime);
         }
+
+        void DrawMainMenu(GameTime gameTime)
+        {
+            // Draw the main menu, any active selections, etc
+        }
+
+        void DrawGameplay(GameTime gameTime)
+        {
+            // Draw the background the level
+            // Draw enemies
+            // Draw the player
+            // Draw particle effects, etc
+        }
+
+        void DrawEndOfGame(GameTime gameTime)
+        {
+            // Draw text and scores
+            // Draw menu for restarting level or going back to main menu
+        }
+
         protected bool Collide()
         {
             Rectangle goodSpriteRect = new Rectangle((int)position.X,
